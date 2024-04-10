@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0);
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    overflow-y: hidden;
+}
+
+.container {
+    text-align: center;
+    margin: 0;
+    padding: 0.1em;
+    overflow-y: hidden;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#selected-verse {
+    opacity: 1;
+    font-size: 5em;
+    text-align: center;
+    margin: 0;
+    padding: 50px 100px;
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-y: hidden;
+}
+
+#selected-verse strong {
+    font-weight: bold; /* Negrita para la cita del versículo */
+}
+
+#selected-verse span {
+    font-weight: lighter; /* Fuente más clara para el texto del versículo entre comillas */
+    color: #000000;
+}

@@ -1,0 +1,112 @@
+body {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 400px;
+}
+
+.form-label,
+.form-control,
+.btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+#reference {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+#result-container {
+    position: relative; /* Añadir posición relativa para que la lista desplegable sea relativa a este elemento */
+    max-height: 300px; /* Altura máxima de la lista desplegable */
+    overflow-y: auto; /* Añadir scroll vertical si es necesario */
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+#result-container ul {
+    list-style-type: none; /* Eliminar viñetas de la lista */
+    padding: 0;
+    margin: 0;
+}
+
+#result-container ul li {
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#result-container ul li:hover {
+    background-color: #f1f3f5;
+}
+
+#result {
+    color: #333;
+    font-size: 16px;
+    font-family: Arial, sans-serif; /* Fuente por defecto */
+}
+
+.btn-primary {
+    background-color: #343a40;
+    border-color: #343a40;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.form-select:focus,
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(52, 58, 64, 0.25);
+}
+
+.list-group-item {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f1f3f5;
+}
+
+#autocomplete-list {
+    max-height: 300px; /* Altura máxima de la lista desplegable */
+    overflow-y: auto; /* Añadir scroll vertical si es necesario */
+    width: calc(100% - 40px);
+    top: calc(100% + 10px); /* Posiciona la lista debajo del campo de búsqueda */
+    left: 0; /* Ajusta la posición a la izquierda */
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px 20px; /* Ajusta el padding para que coincida con los otros elementos */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+
+
+#autocomplete-list .list-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#autocomplete-list .list-item:hover {
+    background-color: #f1f3f5;
+}
