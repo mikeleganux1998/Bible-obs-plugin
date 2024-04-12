@@ -5,7 +5,7 @@ $(document).ready(function () {
     // Función para enviar el versículo seleccionado
     function sendVerse(verse) {
         // Enviar el versículo a través del canal
-        channel.postMessage(verse);
+        channel.postMessage(verse || ' ');
     }
 
     /// Ocultar la lista de autocompletado al cargar la página
@@ -50,8 +50,6 @@ $(document).ready(function () {
         });
     }
 
-    // Realizar búsqueda del versículo seleccionado
-    // Realizar búsqueda del versículo seleccionado
     $('#searchBtn').on('click', function () {
         const version = $('#version').val();
         const reference = $('#reference').val().toLowerCase(); // Convertir la referencia a minúsculas para una comparación más fácil
@@ -59,10 +57,10 @@ $(document).ready(function () {
         // Obtener los datos del libro seleccionado
         const bookData = getVersionData(version);
 
-        // Extraer el nombre del libro y el capítulo/verso de la referencia
+        // Extraer el nombre del libro, el número del capítulo y el rango de versículos de la referencia
         const parts = reference.split(' '); // Separar la referencia en partes
         const bookName = parts.slice(0, -1).join(' '); // Unir las partes del nombre del libro
-        const chapterVerse = parts.slice(-1)[0].split(':'); // Separar el capítulo y el verso
+        const chapterVerse = parts.slice(-1)[0].split(':'); // Separar el capítulo y el rango de versículos
 
         console.log('bookName:', bookName);
         console.log('chapterVerse:', chapterVerse);
@@ -70,7 +68,41 @@ $(document).ready(function () {
         // Buscar el libro en los datos
         const selectedBook = bookData.find(book => book.name.toLowerCase() === bookName);
 
-        // Verificar si se encontró el libro y si el capítulo/verso es válido
+        // Verificar si se encontró el libro y si se especificó un capítulo
+        if (selectedBook) {
+            const chapter = parseInt(chapterVerse[0]);
+
+            if (chapter > 0 && chapter <= selectedBook.chapters.length) {
+                const chapterData = selectedBook.chapters[chapter - 1];
+
+                if (chapterVerse[1]) {
+                    // Si se especifica un rango de versículos
+                    const verseRange = chapterVerse[1].split('-'); // Separar el rango en inicio y fin
+                    const startVerse = parseInt(verseRange[0]);
+                    const endVerse = parseInt(verseRange[1]);
+
+                    if (startVerse > 0 && endVerse > 0 && startVerse <= endVerse && endVerse <= chapterData.verses.length) {
+                        // Mostrar el rango de versículos especificado
+                        let resultText = '';
+                        for (let i = startVerse; i <= endVerse; i++) {
+                            resultText += formatVerse(selectedBook, chapter, i, version);
+                        }
+                        $('#result').html(resultText);
+                        return; // Salir de la función después de mostrar los versículos
+                    }
+                } else {
+                    // Si no se especifica un rango de versículos, mostrar todo el capítulo
+                    let resultText = '';
+                    chapterData.verses.forEach(verse => {
+                        resultText += formatVerse(selectedBook, chapter, verse.number, version);
+                    });
+                    $('#result').html(resultText);
+                    return; // Salir de la función después de mostrar los versículos
+                }
+            }
+        }
+
+        // Si no se especificó un capítulo, buscar por versículo individual
         if (selectedBook && chapterVerse.length === 2) {
             const chapter = parseInt(chapterVerse[0]);
             const verse = parseInt(chapterVerse[1]);
@@ -92,6 +124,8 @@ $(document).ready(function () {
         // Mostrar un mensaje si la referencia no es válida
         $('#result').html('Versículo no encontrado');
     });
+
+
 
 
     // Función para formatear el verso con la tipografía seleccionada
@@ -135,17 +169,32 @@ $(document).ready(function () {
         if (selectedVerse) {
             $(this).removeClass('selected'); // Quitar la clase "selected"
             $(this).css('background-color', ''); // Quitar el color de fondo amarillo
-            // Aquí puedes agregar la lógica para ocultar el verso de versos.html si es necesario
+
+            sendVerse(''); // Enviamos un mensaje vacío
+
+            // Ocultar el verso en verso.html
+            $('#verse-citation').empty();
+            $('#verse-text').empty();
+
+            localStorage.setItem('selectedVerse', ' '); // Almacenar el verso en el almacenamiento local
+
         } else {
+            // Limpiar la selección anterior
+            $('.verse').removeClass('selected');
+            $('.verse').css('background-color', '');
+
             $(this).addClass('selected'); // Agregar la clase "selected" al verso seleccionado
             $(this).css('background-color', 'yellow'); // Cambiar el color de fondo a amarillo
-            // Aquí puedes agregar la lógica para mostrar el verso en versos.html si es necesario
+            // Mostrar el verso en verso.html
+            $('#verse-citation').html($(this).find('.verse-citation').html());
+            $('#verse-text').html($(this).find('.verse-text').html());
+
+            // Enviar el versículo seleccionado a través del canal
+            sendVerse(verseText);
+            localStorage.setItem('selectedVerse', verseText); // Almacenar el verso en el almacenamiento local
+
         }
-
-        localStorage.setItem('selectedVerse', verseText); // Almacenar el verso en el almacenamiento local
-
-        // Enviar el versículo seleccionado a través del canal
-        sendVerse(verseText);
     });
 
 });
+
