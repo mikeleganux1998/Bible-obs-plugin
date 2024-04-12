@@ -29,22 +29,21 @@ body {
     align-items: center;
 }
 
-#selected-verse {
+#verse-container {
     opacity: 1;
-    font-size: 5em;
     text-align: center;
     margin: 0;
-    padding: 50px 100px;
+    padding: 10px 5%;
     width: 100%;
-    white-space: pre-wrap;
-    overflow-y: hidden;
 }
 
-#selected-verse strong {
-    font-weight: bold; /* Negrita para la cita del versículo */
+.verse-citation {
+    font-size: 2.0em;
+    font-weight: bold;
 }
 
-#selected-verse span {
-    font-weight: lighter; /* Fuente más clara para el texto del versículo entre comillas */
-    color: #000000;
+.verse-text {
+    font-size: 2.4em;
+    margin-top: 20px;
+    color: #333;
 }

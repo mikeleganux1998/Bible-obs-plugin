@@ -15,47 +15,83 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
 
+
 </head>
 <body>
 <div class="container text-center">
-    <h1 class="mb-4">Buscador de la Biblia</h1>
+    <header class="text-center">
 
-    <div class="mb-3">
-        <label for="version" class="form-label">Versión:</label>
-        <select id="version" class="form-select">
-            <option value="RV1960">RV1960</option>
-            <option value="LBLA">LBLA</option>
-            <option value="NVI">NVI</option>
-        </select>
+        <img style="max-height: 150px;" src="logo.png" alt="Logo Cultura de Jesus">
+
+    </header>
+    <div class="m-o p-0">
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-2">
+                    <label  style="font-size: 14px;" for="version" class="form-label">Versión:</label>
+                    <select id="version" class="form-select">
+                        <option value="RV1960">RV1960</option>
+                        <option value="LBLA">LBLA</option>
+                        <option value="NVI">NVI</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label style="font-size: 14px;" for="fontSelect" class="form-label">Tipo de letra:</label>
+                    <select id="fontSelect" class="form-select">
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="Times New Roman, serif">Times New Roman</option>
+                        <option value="Verdana, sans-serif">Verdana</option>
+                        <option value="Roboto, sans-serif">Roboto (Google Fonts)</option>
+                        <option value="Montserrat, sans-serif">Montserrat (Google Fonts)</option>
+                        <option value="Open Sans, sans-serif">Open Sans (Google Fonts)</option>
+                        <option value="Lato, sans-serif">Lato (Google Fonts)</option>
+                        <option value="Raleway, sans-serif">Raleway (Google Fonts)</option>
+                        <option value="Poppins, sans-serif">Poppins (Google Fonts)</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <label style="font-size: 10px;" for="reference" class="form-label fw-lighter">Referencia (por ejemplo, Génesis 1:1):</label>
+
+            <div class="col-md-9">
+                <div class="m-0">
+                    <input type="text" id="reference" class="form-control">
+                    <div id="autocomplete-list" class="list-group"></div> <!-- Cambiado de ul a div -->
+                </div>
+            </div>
+            <div class="col-md-3 align-self-start">
+                <button id="searchBtn" class="btn btn-primary w-100">lupa</button>
+            </div>
+        </div>
+
+
+
+
+
     </div>
 
-    <div class="mb-3">
-        <label for="reference" class="form-label">Referencia (por ejemplo, Génesis 1:1):</label>
-        <input type="text" id="reference" class="form-control">
-        <div id="autocomplete-list" class="list-group"></div> <!-- Cambiado de ul a div -->
-    </div>
 
-    <button id="searchBtn" class="btn btn-primary">Buscar</button>
-
-    <div class="mb-3">
-        <label for="fontSelect" class="form-label">Tipo de letra:</label>
-        <select id="fontSelect" class="form-select">
-            <option value="Arial, sans-serif">Arial</option>
-            <option value="Times New Roman, serif">Times New Roman</option>
-            <option value="Verdana, sans-serif">Verdana</option>
-            <option value="Roboto, sans-serif">Roboto (Google Fonts)</option>
-            <option value="Montserrat, sans-serif">Montserrat (Google Fonts)</option>
-            <option value="Open Sans, sans-serif">Open Sans (Google Fonts)</option>
-            <option value="Lato, sans-serif">Lato (Google Fonts)</option>
-            <option value="Raleway, sans-serif">Raleway (Google Fonts)</option>
-            <option value="Poppins, sans-serif">Poppins (Google Fonts)</option>
-        </select>
-    </div>
-
-    <div id="result-container" class="mt-3"> <!-- Contenedor de los resultados con scroll -->
+    <div id="result-container" class="p-1"> <!-- Contenedor de los resultados con scroll -->
         <div id="result"></div> <!-- Resultados -->
     </div>
+    <footer class="footer py-1">
+        <div class="container">
+            <img style="max-height: 30px;" src="https://culturadejesus.com/public/images/logos/cjn-min.png"
+                 alt="Logo Cultura de Jesus">
+            <p class="mb-1 fw-bold" style="font-size: 9px">&copy; 2024 Todos los derechos
+                reservados</p>
+            <p class="mb-0 fw-lighter" style="font-size: 7px">Desarrollado por Miguel Rosas</p>
+        </div>
+    </footer>
+
 </div>
+
 
 <script src="bibles/RV1960.js"></script>
 <script src="bibles/LBLA.js"></script>
