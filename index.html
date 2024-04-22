@@ -40,6 +40,9 @@
                                 <option value="RV1960">RV1960</option>
                                 <option value="LBLA">LBLA</option>
                                 <option value="NVI">NVI</option>
+                                <option value="NTV">NTV</option>
+                                <option value="TLA">TLA</option>
+                                <option value="DHH">Dios Habla Hoy</option>
                             </select>
                         </div>
 
@@ -85,21 +88,38 @@
 
             <div class="col-6">
                 <p>Resultado:</p>
+                <div class="row m-1">
+                    <div class="col-2">
+                        <button id="prevChapterBtn" class="btn btn-sm btn-primary w-100" style="font-size: 15px;" title="Capítulo Anterior">
+                            <span style="font-size: 15px;" class="bi bi-arrow-left-circle"></span> <!-- Ícono para Capítulo Anterior -->
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button id="nextChapterBtn" class="btn btn-sm  btn-primary w-100" style="font-size: 15px;" title="Siguiente Capítulo">
+                            <span style="font-size: 15px;"  class="bi bi-arrow-right-circle"></span> <!-- Ícono para Siguiente Capítulo -->
+                        </button>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                </div>
+
                 <div class="m-3">
                     <div id="result-container" class=""> <!-- Contenedor de los resultados con scroll -->
                         <div id="result"></div> <!-- Resultados -->
                     </div>
                 </div>
 
+
             </div>
+
         </div>
 
 
     </div>
 
 
-    <footer class="footer py-1">
-        <div class="container mt-5">
+    <footer class="footer">
+        <div class="container">
             <img style="max-height: 45px;" src="img/cjn-min.png" alt="Logo Cultura de Jesus">
             <p class="mb-1 fw-bold" style="font-size: 11px">&copy; 2024 Todos los derechos
                 reservados</p>
@@ -110,10 +130,14 @@
 </div>
 
 
-<script src="bibles/RV1960.js"></script>
-<script src="bibles/LBLA.js"></script>
-<script src="bibles/NVI.js"></script>
-<script src="js/script.js"></script>
+<script src="bibles/RV1960.js?v=" + Math.random()></script>
+<script src="bibles/LBLA.js?v=" + Math.random()></script>
+<script src="bibles/NVI.js?v=" + Math.random()></script>
+<script src="bibles/NTV.js?v=" + Math.random()></script>
+<script src="bibles/TLA.js?v=" + Math.random()></script>
+<script src="bibles/DHH.js?v=" + Math.random()></script>
+<script src="js/script.js?v=" + Math.random()></script>
+
 
 </body>
 </html>

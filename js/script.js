@@ -1,6 +1,8 @@
-$(document).ready(function () {
+$(async function () {
     // Crear un canal de comunicación
     const channel = new BroadcastChannel("bibleVerseChannel");
+    // Variable global para almacenar el capítulo actual
+    let currentChapter = 1;
 
     // Función para enviar el versículo seleccionado
     function sendVerse(verse) {
@@ -125,9 +127,6 @@ $(document).ready(function () {
         $('#result').html('Versículo no encontrado');
     });
 
-
-
-
     // Función para formatear el verso con la tipografía seleccionada
     function formatVerse(book, chapter, verse, version) {
         const verseText = book.chapters[chapter - 1].verses[verse - 1].text;
@@ -145,6 +144,12 @@ $(document).ready(function () {
                 return NVI;
             case 'RV1960':
                 return RV1960;
+            case 'TLA':
+                return TLA;
+            case 'DHH':
+                return DHH;
+            case 'NTV':
+                return NTV;
             default:
                 return []; // Devolver un array vacío si la versión no es válida
         }
@@ -159,6 +164,71 @@ $(document).ready(function () {
         localStorage.setItem('selectedFont', selectedFont);
     });
 
+    // Manejar el clic en el botón "Capítulo Anterior"
+    $('#prevChapterBtn').on('click', function () {
+        const version = $('#version').val();
+        const reference = $('#reference').val().toLowerCase(); // Convertir la referencia a minúsculas para una comparación más fácil
+
+        // Obtener los datos del libro seleccionado
+        const bookData = getVersionData(version);
+
+        // Extraer el nombre del libro y el número del capítulo de la referencia
+        const parts = reference.split(' '); // Separar la referencia en partes
+        const bookName = parts.slice(0, -1).join(' '); // Unir las partes del nombre del libro
+
+        // Buscar el libro en los datos
+        const selectedBook = bookData.find(book => book.name.toLowerCase() === bookName);
+
+        // Verificar si se encontró el libro y si se especificó un capítulo
+        if (selectedBook && currentChapter > 1) {
+            currentChapter--; // Decrementar el número del capítulo actual
+            const prevChapterData = selectedBook.chapters[currentChapter - 1]; // Obtener los datos del capítulo anterior
+
+            let resultText = '';
+            prevChapterData.verses.forEach(verse => {
+                resultText += formatVerse(selectedBook, currentChapter, verse.number, version);
+            });
+            $('#result').html(resultText); // Mostrar el capítulo anterior
+
+            // Actualizar el campo de referencia
+            $('#reference').val(selectedBook.name + ' ' + currentChapter);
+        } else {
+            alert('Este es el primer capítulo del libro');
+        }
+    });
+
+// Manejar el clic en el botón "Siguiente Capítulo"
+    $('#nextChapterBtn').on('click', function () {
+        const version = $('#version').val();
+        const reference = $('#reference').val().toLowerCase(); // Convertir la referencia a minúsculas para una comparación más fácil
+
+        // Obtener los datos del libro seleccionado
+        const bookData = getVersionData(version);
+
+        // Extraer el nombre del libro y el número del capítulo de la referencia
+        const parts = reference.split(' '); // Separar la referencia en partes
+        const bookName = parts.slice(0, -1).join(' '); // Unir las partes del nombre del libro
+
+        // Buscar el libro en los datos
+        const selectedBook = bookData.find(book => book.name.toLowerCase() === bookName);
+
+        // Verificar si se encontró el libro y si se especificó un capítulo
+        if (selectedBook && currentChapter < selectedBook.chapters.length) {
+            currentChapter++; // Incrementar el número del capítulo actual
+            const nextChapterData = selectedBook.chapters[currentChapter - 1]; // Obtener los datos del siguiente capítulo
+
+            let resultText = '';
+            nextChapterData.verses.forEach(verse => {
+                resultText += formatVerse(selectedBook, currentChapter, verse.number, version);
+            });
+            $('#result').html(resultText); // Mostrar el siguiente capítulo
+
+            // Actualizar el campo de referencia
+            $('#reference').val(selectedBook.name + ' ' + currentChapter);
+        } else {
+            alert('No hay más capítulos disponibles');
+        }
+    });
 
     // Manejar el clic en un verso
     $(document).on('click', '.verse', function () {
